@@ -16,7 +16,7 @@ spec:
       containers:
       - name: product-service
         # REPLACE THIS with the image you pushed to your registry!
-        image: your-username/product-service:v1.0.0 
+        image: gudsingh/product-service:v1.0.0 
         ports:
         - containerPort: 5000
         volumeMounts:
