@@ -4,6 +4,9 @@ metadata:
   name: product-db-pvc
   namespace: e-commerce
 spec:
+  # ⚠️ ADD THIS LINE: Explicitly request the StorageClass created by the NFS Provisioner
+  storageClassName: nfs-client
+  # ---------------------------------------------------------------------------------
   accessModes:
     - ReadWriteOnce # Only one node can mount this volume at a time
   resources:
