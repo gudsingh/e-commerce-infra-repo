@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-deployment
+  namespace: e-commerce
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: e-commerce-frontend
+  template:
+    metadata:
+      labels:
+        app: e-commerce-frontend
+    spec:
+      containers:
+      - name: frontend-container
+        # ⚠️ Replace with your actual frontend image (e.g., Nginx serving React build)
+        image: gudsingh/e-commerce-frontend:v1.0.0 
+        ports:
+        - containerPort: 80 # Assuming the web server listens on port 80
+        env:
+          # Frontend needs to know where the API is located (Internal ClusterIP)
+          - name: PRODUCT_API_URL
+            value: "http://product-service.e-commerce.svc.cluster.local"
+          - name: AUTH_API_URL
+            value: "http://auth-service.e-commerce.svc.cluster.local"

@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-deployment
+  namespace: e-commerce
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth-service
+  template:
+    metadata:
+      labels:
+        app: auth-service
+    spec:
+      containers:
+      - name: auth-container
+        # ⚠️ Replace with your actual authentication service image
+        image: gudsingh/auth-service:v1.0.0 
+        ports:
+        - containerPort: 5001 # Assuming Auth API runs on a different port
+        volumeMounts:
+        - name: db-storage
+          mountPath: /mnt/auth-db
+      volumes:
+      - name: db-storage
+        persistentVolumeClaim:
+          claimName: auth-db-pvc
