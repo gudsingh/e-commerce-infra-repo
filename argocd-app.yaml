@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: e-commerce-project
+  namespace: argocd
+spec:
+  project: default
+  source:
+    # ⚠️ REPLACE WITH YOUR e-commerce-infra-repo GITHUB URL!
+    repoURL: https://github.com/gudsingh/e-commerce-infra-repo.git 
+    targetRevision: HEAD
+    path: manifests # Tells Argo to look in the 'manifests' folder
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: e-commerce
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true # Ensures the namespace is created if it doesn't exist
