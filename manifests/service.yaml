@@ -4,6 +4,7 @@ metadata:
   name: product-service
   namespace: e-commerce
 spec:
+  type: NodePort
   selector:
     app: product-service
   ports:
