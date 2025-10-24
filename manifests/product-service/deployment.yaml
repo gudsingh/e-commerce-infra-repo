@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: product-deployment
+  namespace: e-commerce
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: product-service
+  template:
+    metadata:
+      labels:
+        app: product-service
+    spec:
+      containers:
+      - name: product-service
+        # REPLACE THIS with the image you pushed to your registry!
+        image: your-username/product-service:v1.0.0 
+        ports:
+        - containerPort: 5000
+        volumeMounts:
+        - name: db-storage
+          mountPath: /mnt/data # Mounts the PVC to where app.py expects the DB
+      volumes:
+      - name: db-storage
+        persistentVolumeClaim:
+          claimName: product-db-pvc
